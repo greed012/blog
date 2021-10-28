@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+{%for title,date,author,body in params %}
+<div class="container">
+    <h1>{{title}}</h1>
+    <h4>{{author}}</h4>
+    <h4>{{date}}</h4>
+    <p>{{body|safe}}</p>
+
+
+
+<br><br>
+ <a href="/edit_post/{{id}}" class="btn btn-success">Edit</a>
+
+    </div>
+{% endfor %}
+{% endblock %}

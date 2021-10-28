@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+<!--***********************Page_content starts here ****************-->
+{% block body %}
+
+
+{% for id,title,date,author,body in params %}
+<div class="container">
+  <h4>{{title}} - {{author}}</h4>
+  <h4>{{date}}</h4>
+  <p>{{body|safe}}.....<a href="/detail_view/{{id}}" class="btn btn-warning">Read in detail</a></p>
+
+
+</div>
+{% endfor %}
+
+
+
+
+
+{% endblock %}
+<!--***********************Page_content ends here ****************-->
+
