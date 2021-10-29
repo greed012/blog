@@ -6,28 +6,28 @@
 <!-- ******************* Starting of Form ************************************** --><form class="container" method="post">{% csrf_token %}
     {{ form.media }}
     {{ form.non_field_errors }}
+  <form method="post">
   <div class="mb-3">
-       {{ form.title.errors }}
+      <span class="text-danger">{{ form.title.errors }}</span>
     <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
     {{ form.title }}
   </div>
 
   <div class="mb-3">
-    {{ form.author.errors }}
+    <span class="text-danger">{{ form.author.errors }}</span>
     <label for="{{ form.author.id_for_label }}">Author</label>
     {{ form.author }}
   </div>
 
 <label for="select" class="form-label">Select the category</label>
 <select class="form-select mb-3" id="select" name='select' aria-label="Default select example">
-  <option selected >Cyber Security</option>
-  <option value="Science">Science</option>
-  <option value="ComputerScience">ComputerScience</option>
-  <option value="Literature">Literature</option>
+  {% for i in cat %}
+  <option value="{{i}}">{{i}}</option>
+  {% endfor %}
 </select>
 
   <div class="mb-3">
-    {{ form.author.errors }}
+    <span class="text-danger">{{ form.author.errors }}</span>
     <h5>Post</h5>
     {{ form.body }}
   </div>
@@ -35,6 +35,5 @@
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 
 {% endblock %}

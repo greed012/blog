@@ -1,6 +1,9 @@
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
-from . models import blog_data
-from . forms import blog_data_form
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
+from . models import blog_data, category
+from . forms import blog_data_form, category_form
+from django.http import Http404
+
+
 #index
 def index(request):
     blog_coontent = blog_data.objects.all()
@@ -13,6 +16,10 @@ def index(request):
 
 #Createpost
 def create(request):
+    category_data = category.objects.all()
+    cat = []
+    for i in category_data:
+        cat.append(i.category_name)
     if request.method == 'POST':
         form = blog_data_form(request.POST)
         if form.is_valid():
@@ -21,23 +28,49 @@ def create(request):
             return redirect('/')
     else:
         form = blog_data_form()
-    return render(request, 'create.html',{'form':form})
+    return render(request, 'create.html',{'form':form,'cat':cat})
 
 #Createpost
 def edit(request, post_id=None):
+    category_data = category.objects.all()
+    cat = []
+    for i in category_data:
+        cat.append(i.category_name)
+
     item = get_object_or_404(blog_data, id=post_id)
     form = blog_data_form(request.POST or None, instance=item)
     if form.is_valid():
         form.save()
         return redirect('/')
-    return render(request, 'create.html', {'form':form})
+    return render(request, 'create.html', {'form':form,'cat':cat})
 
 
 def details_view(request,post_id):
     blog_data_detail = blog_data.objects.filter(id=post_id)
-    blog_cont_list = []
-    for i in blog_data_detail:
-        i_data = [i.title, i.published_date, i.author, i.body]
-        blog_cont_list.append(i_data)
+    if blog_data_detail:
+        blog_cont_list = []
+        for i in blog_data_detail:
+            i_data = [i.title, i.published_date, i.author, i.body]
+            blog_cont_list.append(i_data)
 
-    return render(request,'detail.html',{'params':blog_cont_list,'id':post_id})
+        if request.method == 'POST':
+            blog_data_detail.delete()
+            return HttpResponseRedirect('/')
+
+        return render(request, 'detail.html', {'params': blog_cont_list, 'id': post_id})
+    else:
+        raise Http404('Page Not Found')
+
+
+def add_category(request):
+    if request.method == 'POST':
+        form = category_form(request.POST)
+        if form.is_valid():
+            post_item = form.save(commit=False)
+            post_item.save()
+            return redirect('/')
+    else:
+        form = category_form()
+    return render(request, 'add_category.html', {'form': form})
+
+

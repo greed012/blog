@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+  {{ form.media }}
+
+    {{ form.non_field_errors }}
+<form method="post">{% csrf_token %}
+  <div class="mb-3 container">
+   <span class="text-danger"> {{ form.category_name.errors }}</span>
+    <label for="{{ form.category_name.id_for_label }}">Category</label>
+    {{ form.category_name }}
+
+  <button type="submit" class="btn btn-primary mt-4">Submit</button>
+    </div>
+    </form>
+{% endblock %}
