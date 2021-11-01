@@ -2,16 +2,25 @@ from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_
 from . models import blog_data, category
 from . forms import blog_data_form, category_form
 from django.http import Http404
-
+from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 
 #index
 def index(request):
-    blog_coontent = blog_data.objects.all()
-    blog_cont_list = []
-    for i in blog_coontent:
-        i_data = [i.id,i.title,i.published_date,i.author,i.body]
-        blog_cont_list.append(i_data)
-    return render(request,'index.html',{'params':blog_cont_list})
+    object_list = blog_data.objects.all()
+    paginator = Paginator(object_list, 4)  # 4 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'index.html', {'page': page, 'params': posts})
+
+
+
 
 
 #Createpost
@@ -50,7 +59,7 @@ def details_view(request,post_id):
     if blog_data_detail:
         blog_cont_list = []
         for i in blog_data_detail:
-            i_data = [i.title, i.published_date, i.author, i.body]
+            i_data = [i.title, i.published_date, i.author,i.cover_image, i.body]
             blog_cont_list.append(i_data)
 
         if request.method == 'POST':
@@ -74,3 +83,5 @@ def add_category(request):
     return render(request, 'add_category.html', {'form': form})
 
 
+def dashboard(request):
+    return render(request,'dashboard.html')

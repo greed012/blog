@@ -1,22 +1,86 @@
 {% extends 'base.html'%}
+ {% load blog_tags %}
 <!--***********************Page_content starts here ****************-->
 {% block body %}
+<style>img {
+            max-width:100%;
+            max-height:10rem;
+            object-fit: cover;
+            }
 
 
-{% for id,title,date,author,body in params %}
-<div class="container">
-  <h4>{{title}} - {{author}}</h4>
-  <h4>{{date}}</h4>
-  <p>{{body|safe}}.....<a href="/detail_view/{{id}}" class="btn btn-warning">Read in detail</a></p>
+</style>
 
+<div class="row" style="margin:1rem;">
+<div class="mt-1 row col-md-9 col-12 col-lg-9 col-xl-9 row-cols-1 row-cols-md-1 g-1" style="padding:1rem;">
+    {% if params %}
+    {% for param in params %}
+  <div class="col" style="padding:0.2rem;">
+    <div class="card  bg-dark text-white">
+      <div class="card-body">
+        <div class="row">
+        <div class="col-3" style="padding:0rem;margin-left:0rem;">{{param.cover_image|safe}}</div>
+          <div class="col-9">
+              <h5 class="card-title col-12"><u>{{param.title}}</u></h5>
+              <p class="card-text col-12">{{param.body|safe|truncatewords:20}}</p>
+              <a href="/detail_view/{{param.id}}" class="btn btn-warning">Read in detail</a>
+            </div>
+        </div>
+        </div>
+      <div class="card-footer" style="padding:0.1rem;margin-left:0.9rem;">
+        <small class="text-muted">Uploaded on {{param.published_date}}</small>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+</div>
+<!-- *********************** Starting of side bar *********************-->
+
+<div id="sidebar" class="col-3 mt-3">
+ <h2>My blog</h2>
+ <p>This is my blog.I have written {% total_posts %} so far </p>
+ <h5>Latest Posts : </h5>
+    {% show_latest_posts 3 %}
+ </div>
+<!-- *********************** Ending of side bar *********************-->
 
 </div>
-{% endfor %}
 
 
 
+<br><br>
+
+{% if params.has_other_pages %}
+  <nav class="container" style="bottom:-20px;">
+    <ul class="pagination justify-content-center">
+    {% if params.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ params.previous_page_number }}">Previous</a></li>
+    {% else %}
+    <li class="page-item"><span class="page-link">Previous </span></li>
+    {% endif %}
+    {% for i in params.paginator.page_range %}
+      {% if params.number == i %}
+        <li class="active page-item"><a class="page-link" href="#">{{ i }}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if params.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ params.next_page_number }}">Next</a></li>
+
+    {% else %}
+      <li class="page-item"><span class="page-link">Next</span></li>
+    {% endif %}
+  </ul>
+  </nav>
+{% endif %}
 
 
+{% else %}
+
+<span>Please add some post</span>
+
+{% endif %}
 {% endblock %}
 <!--***********************Page_content ends here ****************-->
 

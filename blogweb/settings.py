@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blogapp',
     'ckeditor',
     'ckeditor_uploader',
+
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -107,7 +108,14 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath'
         ]),
+    },
+    'cover_image':{
+        'toolbar':'cover_image',
+        'toolbar_cover_image': [
+            ['Image'],
+    ],
     }
+
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

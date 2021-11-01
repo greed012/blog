@@ -26,8 +26,15 @@
   {% endfor %}
 </select>
 
+
+<div class="mb-3">
+    <span class="text-danger">{{ form.cover_image.errors }}</span>
+    <h5>Cover Image</h5>
+    {{ form.cover_image }}
+</div>
+
   <div class="mb-3">
-    <span class="text-danger">{{ form.author.errors }}</span>
+    <span class="text-danger">{{ form.body.errors }}</span>
     <h5>Post</h5>
     {{ form.body }}
   </div>

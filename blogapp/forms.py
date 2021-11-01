@@ -6,7 +6,7 @@ from django import forms
 class blog_data_form(ModelForm):
     class Meta:
         model = blog_data
-        fields = ['title', 'author', 'body']
+        fields = ['title', 'author','cover_image', 'body']
 
         widgets = {
              'title': forms.TextInput(attrs={'class':"form-control"}),
