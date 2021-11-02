@@ -19,12 +19,11 @@
     {{ form.author }}
   </div>
 
-<label for="select" class="form-label">Select the category</label>
-<select class="form-select mb-3" id="select" name='select' aria-label="Default select example">
-  {% for i in cat %}
-  <option value="{{i}}">{{i}}</option>
-  {% endfor %}
-</select>
+       <div class="mb-3">
+    <span class="text-danger">{{ form.category.errors }}</span>
+    <label for="{{ form.category.id_for_label }}">Category</label>
+    {{ form.category }}
+  </div>
 
 
 <div class="mb-3">
@@ -37,6 +36,12 @@
     <span class="text-danger">{{ form.body.errors }}</span>
     <h5>Post</h5>
     {{ form.body }}
+  </div>
+
+ <div class="mb-3">
+    <span class="text-danger">{{ form.status.errors }}</span>
+    <h5>Status</h5>
+    {{ form.status }}
   </div>
 
 

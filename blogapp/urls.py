@@ -10,5 +10,6 @@ urlpatterns = [
     path('edit_post/<int:post_id>',views.edit, name='edit'),
     path('category/',views.add_category, name='add_category'),
     path('dashboard/',views.dashboard, name='dashboard'),
+    path('drafts/',views.drafts, name='drafts'),
 
 ]

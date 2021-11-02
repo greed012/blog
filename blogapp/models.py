@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from datetime import datetime, date
+from django.utils import timezone
 # Create your models here.
 
 class category(models.Model):
@@ -11,12 +12,23 @@ class category(models.Model):
         return self.category_name
 
 class blog_data(models.Model):
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
     title = models.CharField(max_length=1000)
     author = models.CharField(max_length=100)
-    published_date = models.DateField(auto_now_add=True)
+    category = models.ForeignKey(category,on_delete=models.SET_DEFAULT,default='7')
+    published_date = models.DateTimeField(default=timezone.now)
+    created_created_date = models.DateTimeField(auto_now_add=True)
+    updated_create_date = models.DateTimeField(auto_now=True)
     cover_image = RichTextUploadingField(blank=True, null=True, config_name='cover_image')
     body = RichTextUploadingField(blank=True,null=True)
-
+    status = models.CharField(max_length=10,
+                              choices=STATUS_CHOICES,
+                              default='draft')
+    class Meta:
+        ordering = ('-published_date',)
 
     def __str__(self):
         return self.title + '   |  ' + self.author

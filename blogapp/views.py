@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 
 #index
 def index(request):
-    object_list = blog_data.objects.all()
+    object_list = blog_data.objects.all().filter(status='published')
     paginator = Paginator(object_list, 4)  # 4 posts in each page
     page = request.GET.get('page')
     try:
@@ -19,7 +19,19 @@ def index(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'page': page, 'params': posts})
 
-
+def drafts(request):
+    object_list = blog_data.objects.all().filter(status='draft')
+    paginator = Paginator(object_list, 4)  # 4 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'index.html', {'page': page, 'params': posts})
 
 
 
@@ -57,16 +69,10 @@ def edit(request, post_id=None):
 def details_view(request,post_id):
     blog_data_detail = blog_data.objects.filter(id=post_id)
     if blog_data_detail:
-        blog_cont_list = []
-        for i in blog_data_detail:
-            i_data = [i.title, i.published_date, i.author,i.cover_image, i.body]
-            blog_cont_list.append(i_data)
-
         if request.method == 'POST':
             blog_data_detail.delete()
             return HttpResponseRedirect('/')
-
-        return render(request, 'detail.html', {'params': blog_cont_list, 'id': post_id})
+        return render(request, 'detail.html', {'params': blog_data_detail, 'id': post_id})
     else:
         raise Http404('Page Not Found')
 

@@ -22,7 +22,7 @@
         <div class="col-3" style="padding:0rem;margin-left:0rem;">{{param.cover_image|safe}}</div>
           <div class="col-9">
               <h5 class="card-title col-12"><u>{{param.title}}</u></h5>
-              <p class="card-text col-12">{{param.body|safe|truncatewords:20}}</p>
+              <p class="card-text col-12">{{param.body|safe|truncatewords:30}}.....</p>
               <a href="/detail_view/{{param.id}}" class="btn btn-warning">Read in detail</a>
             </div>
         </div>
@@ -40,7 +40,7 @@
  <h2>My blog</h2>
  <p>This is my blog.I have written {% total_posts %} so far </p>
  <h5>Latest Posts : </h5>
-    {% show_latest_posts 3 %}
+    {% show_latest_posts 4 %}
  </div>
 <!-- *********************** Ending of side bar *********************-->
 
