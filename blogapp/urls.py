@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
@@ -9,7 +9,8 @@ urlpatterns = [
     path('detail_view/<int:post_id>',views.details_view, name='details'),
     path('edit_post/<int:post_id>',views.edit, name='edit'),
     path('category/',views.add_category, name='add_category'),
-    path('dashboard/',views.dashboard, name='dashboard'),
     path('drafts/',views.drafts, name='drafts'),
+    path('auth/', include('django.contrib.auth.urls')),
+    path('auth/', include('authentication.urls')),
 
 ]

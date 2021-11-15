@@ -144,12 +144,12 @@ max-height:50rem;
 
 
 
-
+{% if request.user.is_superuser %}
 <div class="container mt-5" style="text-align:center">
 <a href="/edit_post/{{id}}" class="btn btn-success">Edit</a>
 <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-danger">Delete</button>
 </div>
-
+{% endif %}
 <br><br>
 <div id="id01" class="modal">
 

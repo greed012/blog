@@ -4,6 +4,7 @@ from . forms import blog_data_form, category_form
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from datetime import *
+from django.contrib.auth.decorators import login_required
 
 #index
 def index(request):
@@ -20,6 +21,7 @@ def index(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'page': page, 'params': posts})
 
+@login_required(login_url='/auth/login')
 def drafts(request):
     object_list = blog_data.objects.all().filter(status='draft')
     paginator = Paginator(object_list, 4)  # 4 posts in each page
@@ -37,6 +39,7 @@ def drafts(request):
 
 
 #Createpost
+@login_required(login_url='/auth/login')
 def create(request):
     category_data = category.objects.all()
     cat = []
@@ -53,6 +56,7 @@ def create(request):
     return render(request, 'create.html',{'form':form,'cat':cat})
 
 #Createpost
+@login_required(login_url='/auth/login')
 def edit(request, post_id=None):
     category_data = category.objects.all()
     cat = []
@@ -111,7 +115,7 @@ def details_view(request,post_id):
     else:
         raise Http404('Page Not Found')
 
-
+@login_required(login_url='/auth/login')
 def add_category(request):
     if request.method == 'POST':
         form = category_form(request.POST)
@@ -123,6 +127,3 @@ def add_category(request):
         form = category_form()
     return render(request, 'add_category.html', {'form': form})
 
-
-def dashboard(request):
-    return render(request,'dashboard.html')
