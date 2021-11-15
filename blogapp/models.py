@@ -27,8 +27,24 @@ class blog_data(models.Model):
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
+
     class Meta:
         ordering = ('-published_date',)
 
     def __str__(self):
         return self.title + '   |  ' + self.author
+
+class ip_filter(models.Model):
+    post = models.ForeignKey(blog_data,on_delete=models.CASCADE)
+    ip_address = models.GenericIPAddressField()
+    entered_date = models.DateField()
+
+    def __str__(self):
+        return self.ip_address
+
+class no_views(models.Model):
+    post = models.ForeignKey(blog_data,on_delete=models.CASCADE)
+    views = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.post.title

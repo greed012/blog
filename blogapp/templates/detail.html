@@ -115,8 +115,9 @@ max-height:50rem;
 
 
 {%for param in params %}
+
 <div class="container" style="text-align:center">
-    <h1>{{param.title}}</h1>
+    <h1>{{param.title}} - {{views}}views</h1>
     <h4>{{param.author}}</h4>
     <h4>{{param.published_date.date}}</h4>
     <div id="cover">{{param.cover_image|safe}}</div>

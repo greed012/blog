@@ -12,7 +12,7 @@
 </style>
 
 <div class="row" style="margin:1rem;">
-<div class="mt-1 row col-md-9 col-12 col-lg-9 col-xl-9 row-cols-1 row-cols-md-1 g-1" style="padding:1rem;">
+<div class="mt-1 col-12" style="margin-left:1rem;padding:1rem;">
     {% if params %}
     {% for param in params %}
   <div class="col" style="padding:0.2rem;">
@@ -35,18 +35,7 @@
   </div>
     {% endfor %}
 </div>
-<!-- *********************** Starting of side bar *********************-->
 
-<div id="sidebar" class="col-3 mt-3">
- <h2>My blog</h2>
- <p>This is my blog.I have written {% total_posts %} so far </p>
- <h5>Latest Posts : </h5>
-    {% show_latest_posts 4 %}
-
-    <h5>Most Popular by views: </h5>
-    {% show_popular_posts 4 %}
- </div>
-<!-- *********************** Ending of side bar *********************-->
 
 </div>
 

@@ -1,0 +1,16 @@
+<style>
+    a.c{
+    color:black;
+    }
+    a:hover{
+    color:red;
+
+    }
+</style>
+<ul>
+ {% for post in popular_posts %}
+ <li>
+  <a class=" c hover " href="/detail_view/{{post.id}}"><strong>{{ post.title}}</strong> <div style="padding:0rem;margin-left:0rem;width:auto;height:auto;">{{post.cover_image|safe}}</div></a>
+ </li>
+ {% endfor %}
+</ul>
