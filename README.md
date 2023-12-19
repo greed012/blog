@@ -4,7 +4,8 @@
 This project is a simple blog website developed using Django. It was created as part of the initial learning phase to gain proficiency in Django, serving as a practical application to understand the framework's fundamentals.
 
 <h3>Features</h3>
-//A very typical blog website
+//A very typical blog website//
+
 User Authentication: Allows user registration and login for creating and managing blog posts.
 Blog Post Management: Enables users to create, edit, and delete blog posts.
 Comment System: Facilitates commenting on blog posts.
