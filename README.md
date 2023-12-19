@@ -11,7 +11,7 @@ Blog Post Management: Enables users to create, edit, and delete blog posts.
 Comment System: Facilitates commenting on blog posts.
 Responsive Design: Incorporates responsive design principles for optimal viewing across devices.
 
-Acknowledgments
+<h3>Acknowledgments</h3>
 Thanks to the Django community and resources for aiding in the understanding and development of this project.Also big hats off to CodewithHarry and codemy.com youtube channel for holding my hands trhoughout the projects.
 
 
